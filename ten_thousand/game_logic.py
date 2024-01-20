@@ -42,3 +42,75 @@ class GameLogic:
 # # Example usage:
 # dice_roll = GameLogic.roll_dice(5)  # Roll 5 dice
 # score = GameLogic.calculate_score(dice_roll)  # Calculate the score of the roll
+
+
+class GamePlay:
+    def __init__(self):
+        self.total_score = 0
+        self.current_score = 0
+        # self.current_round = 1
+        self.dice_in_play = 6
+
+
+
+    def roll_dice(self):
+        return GameLogic.roll_dice(self.dice_in_play)
+    
+    def set_aside_dice(self, dice_to_set_aside):
+        self.dice_in_play -= len(dice_to_set_aside)
+        self.current_score += GameLogic.calculate_score(dice_to_set_aside)
+
+
+    def bank_score(self):
+        self.total_score += self.current_score
+        self.current_score = 0
+        self.dice_in_play = 6 # this  will reset the dice
+
+
+    def get_total_score(self):
+        return self.total_score
+    
+    def reset_round(self):
+        self.dice_in_play = 6
+        self.current_score = 0
+
+
+def play():
+    game = GamePlay()
+    print("Welcome to Ten Thousand")
+
+
+    user_input = input("(y)es to play or (n)o to decline\n> ")
+    if user_input.lower() != 'y':
+        return
+
+
+    round_number = 1
+    while True:
+        print(f"Starting round {round_number}")
+        print("Rollingn 6 dice...")
+
+        roll = game.roll_dice()
+        print("*** " + " ".join(map(str, roll)) + " ***")
+
+        dice_input = input("Enter dice to keep, or (q)uit:n\>")
+        if dice_input.lower() == 'q':
+            break
+
+        dice_to_keep = tuple(int(d) for d in dice_input)
+        game.set_aside_dice(dice_to_keep)
+
+        print(f"You have {game.current_score} unbanked points and {game.dice_in_play} dice remaining")
+
+        action_input = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
+
+        if action_input.lower() == "b":
+            game.bank_score()
+            print(f"You banked {game.current_score} points in round {round_number}")
+            print(f"Total score is {game.get_total_score()} points")
+            round_number += 1
+            game.reset_round()
+        elif action_input.lower() == 'q':
+            break
+
+    print(f"Thanks for playing. You earned {game.get_total_score()} points")
