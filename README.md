@@ -1,4 +1,4 @@
-# LAB - Class 6
+# LAB - Class 6, 7
 
 ### Project: 10,000
 ### Author: Felix A. Taveras
@@ -24,6 +24,4 @@ instal __pytest__
     pip install pytest
 
 
-### How to initialize/run your application:
-    not yet inplemented
     

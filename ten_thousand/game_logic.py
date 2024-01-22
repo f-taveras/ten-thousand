@@ -57,9 +57,9 @@ class GamePlay:
         return GameLogic.roll_dice(self.dice_in_play)
     
     def set_aside_dice(self, dice_to_set_aside):
+        score = GameLogic.calculate_score(dice_to_set_aside)
+        self.current_score += score
         self.dice_in_play -= len(dice_to_set_aside)
-        self.current_score += GameLogic.calculate_score(dice_to_set_aside)
-
 
     def bank_score(self):
         self.total_score += self.current_score
@@ -83,7 +83,8 @@ def play():
     user_input = input("(y)es to play or (n)o to decline\n> ")
     if user_input.lower() != 'y':
         return
-
+    dice_input = input("Enter dice to keep, or (q)uit:\n> ")
+    
 
     round_number = 1
     while True:
@@ -93,6 +94,9 @@ def play():
         roll = game.roll_dice()
         print("*** " + " ".join(map(str, roll)) + " ***")
 
+        if dice_input.lower() == 'q':
+            break
+        
         dice_input = input("Enter dice to keep, or (q)uit:n\>")
         if dice_input.lower() == 'q':
             break
@@ -113,4 +117,5 @@ def play():
         elif action_input.lower() == 'q':
             break
 
+    
     print(f"Thanks for playing. You earned {game.get_total_score()} points")
