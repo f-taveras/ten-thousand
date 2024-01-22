@@ -83,39 +83,62 @@ def play():
     user_input = input("(y)es to play or (n)o to decline\n> ")
     if user_input.lower() != 'y':
         return
-    dice_input = input("Enter dice to keep, or (q)uit:\n> ")
+    # dice_input = input("Enter dice to keep, or (q)uit:\n> ")
     
 
     round_number = 1
     while True:
         print(f"Starting round {round_number}")
-        print("Rollingn 6 dice...")
+        # print("Rollingn 6 dice...")
 
         roll = game.roll_dice()
         print("*** " + " ".join(map(str, roll)) + " ***")
 
-        if dice_input.lower() == 'q':
-            break
-        
-        dice_input = input("Enter dice to keep, or (q)uit:n\>")
-        if dice_input.lower() == 'q':
-            break
-
-        dice_to_keep = tuple(int(d) for d in dice_input)
-        game.set_aside_dice(dice_to_keep)
-
-        print(f"You have {game.current_score} unbanked points and {game.dice_in_play} dice remaining")
-
-        action_input = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
-
-        if action_input.lower() == "b":
-            game.bank_score()
-            print(f"You banked {game.current_score} points in round {round_number}")
-            print(f"Total score is {game.get_total_score()} points")
+        if game.is_ziltch(roll):
+            print("Ziltch! No points for this round.")
             round_number += 1
             game.reset_round()
-        elif action_input.lower() == 'q':
-            break
+            continue
 
-    
-    print(f"Thanks for playing. You earned {game.get_total_score()} points")
+        while game.can_continue():
+            dice_input = input("Enter dice to keep, or (q)uit:\n> ")
+            if dice_input.lower() == 'q':
+                return
+            
+            dice_to_keep = tuple(int(d) for d in dice_input if d.isdigit())
+            if not all(die in roll for die in dice_to_keep):
+                print("Invalid selection. Please select dice from the roll") 
+                continue
+
+
+
+
+            game.set_aside_dice(dice_to_keep)
+
+            print(f"You have {game.current_score} unbanked points and {game.dice_in_play} dice remaining")
+
+
+            if game.dice_in_play == 0:
+                print(f"All dice scored! Rolling all 6 dice again.")
+                game.dice_in_play = 6
+
+            action_input = input("(r)oll again, (b)ank your points or (q)uit:\n> ")
+
+
+
+            if action_input.lower() == "b":
+                game.bank_score()
+                print(f"You banked {game.current_score} points in round {round_number}")
+                print(f"Total score is {game.get_total_score()} points")
+                round_number += 1
+                game.reset_round()
+                break
+            elif action_input.lower() == 'q':
+                print(f"Thanks for playing. You earned {game.get_total_score()} points")
+                return
+
+            # End of round logic, if not already handled
+        if game.current_score == 0:
+            print("No points scored in this round.")
+        round_number += 1
+        game.reset_round()
