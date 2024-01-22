@@ -1,4 +1,4 @@
-# LAB - Class 6, 7
+# LAB - Class 6, 7, 8
 
 ### Project: 10,000
 ### Author: Felix A. Taveras
