@@ -52,3 +52,5 @@ class GameLogic:
             if keeper not in roll_counts or keepers_counts[keeper] > roll_counts[keeper]:
                 return False
         return True
+if __name__ == "__main__":
+    GameLogic()

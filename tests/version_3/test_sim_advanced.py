@@ -1,6 +1,6 @@
 import pytest
 from tests.flo import diff
-from ten_thousand.game import play
+from main import play
 
 
 pytestmark = [pytest.mark.version_3]

@@ -1,5 +1,3 @@
-# game.py
-
 from game_logic import GameLogic
 
 class GamePlay:
@@ -31,3 +29,5 @@ class GamePlay:
 
     def can_continue(self):
         return self.dice_in_play > 0
+    
+
