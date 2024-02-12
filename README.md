@@ -1,4 +1,4 @@
-# LAB - Class 6, 7, 8-m 
+# LAB - Class 6, 7, 8
 
 ### Project: 10,000
 ### Author: Felix A. Taveras
@@ -21,7 +21,7 @@ to activate venv
 
 instal __pytest__
 
-    pip install pytest
+    pip install -r requirements.txt
 
 
     
