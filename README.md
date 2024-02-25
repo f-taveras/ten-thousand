@@ -21,7 +21,7 @@ to activate venv
 
 instal __pytest__
 
-    pip install pytest
+    pip install -r requirements.txt
 
 
     
