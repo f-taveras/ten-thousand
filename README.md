@@ -23,5 +23,10 @@ instal __pytest__
 
     pip install -r requirements.txt
 
+To run the program:
+
+* Navigate to ./ten_thousand/ in a terminal and type in:
+
+        $ python main.py
 
     
